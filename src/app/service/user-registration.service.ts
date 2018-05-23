@@ -32,7 +32,7 @@ export class UserRegistrationService {
             Value: user.phone_number
         }));
 
-        this.cognitoUtil.getUserPool().signUp(user.email, user.password, attributeList, null, function (err, result) {
+        this.cognitoUtil.getUserPool().signUp(user.phone_number, user.password, attributeList, null, function (err, result) {
             if (err) {
                 callback.cognitoCallback(err.message, null);
             } else {
@@ -83,6 +83,7 @@ export class UserRegistrationService {
         // Get these details and call
         //cognitoUser.completeNewPasswordChallenge(newPassword, userAttributes, this);
         let authenticationData = {
+            //Username: newPasswordUser.username,
             Username: newPasswordUser.username,
             Password: newPasswordUser.existingPassword,
         };

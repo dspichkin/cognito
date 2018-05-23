@@ -9,7 +9,7 @@ import { DynamoDBService } from "../../../service/ddb.service";
     templateUrl: './login.html'
 })
 export class LoginComponent implements CognitoCallback, LoggedInCallback, OnInit {
-    email: string;
+    phone_number: string;
     password: string;
     errorMessage: string;
     mfaStep = false;
@@ -31,12 +31,12 @@ export class LoginComponent implements CognitoCallback, LoggedInCallback, OnInit
     }
 
     onLogin() {
-        if (this.email == null || this.password == null) {
+        if (this.phone_number == null || this.password == null) {
             this.errorMessage = "All fields are required";
             return;
         }
         this.errorMessage = null;
-        this.userService.authenticate(this.email, this.password, this);
+        this.userService.authenticate(this.phone_number, this.password, this);
     }
 
     cognitoCallback(message: string, result: any) {
@@ -45,7 +45,7 @@ export class LoginComponent implements CognitoCallback, LoggedInCallback, OnInit
             console.log("result: " + this.errorMessage);
             if (this.errorMessage === 'User is not confirmed.') {
                 console.log("redirecting");
-                this.router.navigate(['/home/confirmRegistration', this.email]);
+                this.router.navigate(['/home/confirmRegistration', this.phone_number]);
             } else if (this.errorMessage === 'User needs to set password.') {
                 console.log("redirecting to set new password");
                 this.router.navigate(['/home/newPassword']);
